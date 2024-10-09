@@ -1,0 +1,1643 @@
+<!DOCTYPE html> 
+<html lang="es">
+ <head> 
+<meta charset="UTF-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>Tu Título Aquí</title> 
+<!-- Incluir el CSS para el autocomplete y el calendario -->
+ <link rel="stylesheet" href="https://carnival.aereos.app/aereos.app.lite.min.css"> 
+</head>
+
+ <body> <!-- Tu contenido aquí --> 
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="aereos-tab" data-toggle="tab" href="#aereos" role="tab" aria-controls="aereos"
+            aria-selected="true"><i class="fa fa-plane"></i> Aéreos</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="hoteles-tab" data-toggle="tab" href="#hoteles" role="tab" aria-controls="hoteles"
+            aria-selected="false"><i class="fas fa-concierge-bell"></i> Hoteles</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="paquetes-tab" data-toggle="tab" href="#paquetes" role="tab" aria-controls="paquetes"
+            aria-selected="false"><i class="fas fa-suitcase-rolling"></i> Paquetes</a>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="aereos" role="tabpanel" aria-labelledby="aereos-tab">
+        <div class="card searchEngine border-0" style="margin:0 auto;border-width:2px">
+            <div class="columnas">
+                <div class="card-body">
+                    <div class="row d-block d-sm-none mb-2 mb-sm-0">
+                        <div class="col-12 selectorTipoViajeMobile d-sm-none">
+                            <div class="btn-group-toggle d-flex flex-wrap" data-toggle="buttons">
+                                <label class="btn btn-primary active flex-fill mr-1 mb-1">
+                                    <input type="radio" autocomplete="off" id="roundTrip" value="1" checked="true"
+                                        name="tipoViajeRadio" class="radioRoundTrip">
+                                    <span class="fa-layers fa-fw"><i class="fas fa-long-arrow-alt-left"
+                                            data-fa-transform="shrink-3 down-3 left-5"></i><i
+                                            class="fas fa-long-arrow-alt-right"
+                                            data-fa-transform="shrink-3 up-3"></i></span> Ida y vuelta
+                                </label>
+                                <label class="btn btn-primary flex-fill mb-1">
+                                    <input type="radio" autocomplete="off" id="oneWay" value="1" name="tipoViajeRadio"
+                                        class="radioOneWay"><i class="fas fa-long-arrow-alt-right"
+                                        data-fa-transform="shrink-2"></i> Sólo ida
+                                </label>
+                                <label class="btn btn-primary flex-fill">
+                                    <input type="radio" autocomplete="off" id="multiples" value="1"
+                                        name="tipoViajeRadio" class="radioMultiples"><i class="fas fa-project-diagram"
+                                        data-fa-transform="shrink-2"></i> Múltiples destinos
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="col-md-10 contenedorTramosBuscador">
+                                    <div class="row tramoBusqueda" id="tramoBusqueda" data-id="">
+                                        <div class="col-md-4 grupoOrigenAereos mb-2 mb-sm-0">
+                                            <input type="text" class="form-control origenAereos" id="origenAereos"
+                                                placeholder="Origen" />
+                                            <span
+                                                class="text-secondary fas fa-circle-notch fa-spin preloaderAereos"></span>
+                                            <input type="hidden" id="codigoOrigenAereos" value="" />
+                                        </div>
+                                        <div class="col-md-4 grupoDestinoAereos mb-2 mb-sm-0">
+                                            <input type="text" class="form-control destinoAereos" id="destinoAereos"
+                                                placeholder="Destino" />
+                                            <span
+                                                class="text-secondary fas fa-circle-notch fa-spin preloaderAereos"></span>
+                                            <input type="hidden" id="codigoDestinoAereos" value="" />
+                                        </div>
+                                        <div class="col-md-4 input-group mb-2 mb-sm-0">
+                                            <input type="text" class="form-control partidaAereos" id="partidaAereos"
+                                                readonly placeholder="Partida" aria-label="Partida"
+                                                aria-describedby="calendarioPartida" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text calendarioPartida" id="calendarioPartida">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="dropdown tipsy" data-toggle="tooltip" data-placement="top"
+                                        data-html="true" title="<small>Pasajeros</small>">
+                                        <button class="btn btn-info dropdown-toggle form-control" type="button"
+                                            id="pasajerosAereos" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            <i class="fas fa-user-plus"></i> <span
+                                                class="badge badge-pill badge-light cantidadPax">1</span>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="pasajerosAereos"
+                                            style="min-width:280px !important;padding:10px !important;">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <label for="adultosAereos">Adultos<br>
+                                                        <small class="form-text text-muted">(+12 años)</small></label>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <input type="number" id="adultosAereos" value="1" min="1" max="9"
+                                                        step="1" class="numeroPasajeros" />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <label for="ninosAereos">Niños<br>
+                                                        <small class="form-text text-muted">(2-11 años)</small></label>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <input type="number" id="ninosAereos" value="0" min="0" max="6"
+                                                        step="1" class="numeroPasajeros" />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <label for="infantesAereos">Infantes<br>
+                                                        <small class="form-text text-muted">(0-1 años)</small></label>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <input type="number" id="infantesAereos" value="0" min="0" max="6"
+                                                        step="1" class="numeroPasajeros" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-sm-3">
+                                <div class="col-md-6 selectorTipoViaje d-none d-sm-block">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-primary active">
+                                            <input type="radio" autocomplete="off" id="roundTrip" value="1"
+                                                checked="true" name="tipoViajeRadio" class="radioRoundTrip">
+                                            <span class="fa-layers fa-fw"><i class="fas fa-long-arrow-alt-left"
+                                                    data-fa-transform="shrink-3 down-3 left-5"></i><i
+                                                    class="fas fa-long-arrow-alt-right"
+                                                    data-fa-transform="shrink-3 up-3"></i></span> Ida y vuelta
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" autocomplete="off" id="oneWay" value="1"
+                                                name="tipoViajeRadio" class="radioOneWay"><i
+                                                class="fas fa-long-arrow-alt-right" data-fa-transform="shrink-2"></i>
+                                            Sólo ida
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" autocomplete="off" id="multiples" value="1"
+                                                name="tipoViajeRadio" class="radioMultiples"><i
+                                                class="fas fa-project-diagram" data-fa-transform="shrink-2"></i>
+                                            Múltiples destinos
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 my-3 my-sm-0">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div id="mostrarFlexibles">
+                                                <div class="form-check d-inline d-sm-block">
+                                                    <input type="checkbox" class="form-check-input" id="flexiblesAereos"
+                                                        value="1" />
+                                                    <label for="flexiblesAereos" class="form-check-label tipsy"
+                                                        data-toggle="tooltip" data-placement="bottom" data-html="true"
+                                                        title="<small>Si tenés flexibilidad para la fecha de viaje, utilizá esta opción para ver tarifas más económicas en fechas cercanas.</small>">
+                                                        Tengo fechas flexibles
+                                                    </label>
+                                                </div>
+                                                <div class="form-check d-inline d-sm-block mr-3 mr-sm-0">
+                                                    <input type="checkbox" class="form-check-input" id="businessAereos"
+                                                        value="1" />
+                                                    <label for="businessAereos" class="form-check-label">
+                                                        Sólo Business
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-check d-inline d-sm-block mr-3 mr-sm-0">
+                                                <input type="checkbox" class="form-check-input" id="usdAereos"
+                                                    value="1" />
+                                                <label for="usdAereos" class="form-check-label">
+                                                    Precio en USD
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="controlMultiples d-none">
+                                        <button type="button" class="btn btn-primary" id="agregarTramo"><i
+                                                class="far fa-plus-square"></i> Agregar tramo</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 mb-2 mb-sm-0">
+                                    <div class="dropdown tipsy" data-toggle="tooltip" data-placement="top"
+                                        data-html="true" title="<small>Aerolinea de preferencia</small>">
+                                        <button class="btn btn-info dropdown-toggle form-control" type="button"
+                                            id="avanzadasAereos" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            <i class="fas fa-plane"></i><span
+                                                class="aerolineaSeleccionada ml-2 d-none"></span>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="avanzadasAereos"
+                                            style="min-width:280px !important;padding:10px !important;">
+                                            <div class="grupoAerolineasAereos">
+                                                <label for="aerolineaAereos">Aerolínea de preferencia</label>
+                                                <input type="text" class="form-control" style="width:100% !important"
+                                                    id="aerolineaAereos" placeholder="Ingrese el nombre">
+                                                <span
+                                                    class="text-secondary fas fa-circle-notch fa-spin preloaderAereos"></span>
+                                                <input type="hidden" id="codigoAerolineaAereos">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary btn-block h-100" id="buscarAereos"><i
+                                    class="fas fa-search" style="font-size:1.4rem"></i><br>Buscar aéreos</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-none" id="mensajeErrorAereos">
+
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="hoteles" role="tabpanel" aria-labelledby="hoteles-tab">
+        <div class="card searchEngine border-0" style="margin:0 auto;border-width:2px">
+            <div class="columnas">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 grupoDestinoHoteles form-group mb-2 mb-sm-0">
+                            <label for="destinoHoteles">Destino</label>
+                            <input type="text" class="form-control destinoHoteles" id="destinoHoteles"
+                                placeholder="Destino" value="" />
+                            <span class="text-secondary fas fa-circle-notch fa-spin preloaderHoteles"></span>
+                            <input type="hidden" id="codigoDestinoHoteles" value="" />
+                        </div>
+                        <div class="col-md-4 mb-2 mb-sm-0 form-group">
+                            <label for="partidaHoteles">Check in / Check out</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control partidaHoteles" id="partidaHoteles" readonly
+                                    placeholder="Partida" aria-label="Partida"
+                                    aria-describedby="calendarioPartidaHoteles" value="" />
+                                <div class="input-group-append">
+                                    <span
+                                        class="input-group-text calendarioPartidaHoteles g-theme-bg-blue-v1 text-white"
+                                        id="calendarioPartidaHoteles">
+                                        <i class="far fa-calendar-alt"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 form-group mb-2 mb-sm-0">
+                            <label for="cantidadHabitaciones">Habitaciones</label>
+                            <select class="form-control" id="cantidadHabitaciones">
+                                <option value="1" selected>1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                        <div class="col align-self-end">
+                            <button type="button" class="btn btn-primary btn-block h-100" id="buscarHoteles"><i
+                                    class="fas fa-search"></i> Buscar hoteles</button>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="row g-mb-10 mt-sm-3 align-items-center habitacion d-flex" id="habitacion1" data-id="1">
+                        <div class="col-md-12">
+                            Habitación 1
+                        </div>
+                        <div class="col-md-3">
+                            <label for="adultos1">Adultos <small class="text-muted">(+18 años)</small></label>
+                            <input type="number" id="adultos1" value="2" min="1" max="8" step="1" readonly
+                                class="numeroPasajerosHoteles" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="menores1">Menores <small class="text-muted">(0-17 años)</small></label>
+                            <input type="number" id="menores1" value="0" min="0" max="6" step="1" readonly
+                                class="numeroPasajerosHoteles cantidadMenores" data-hab="1" />
+                        </div>
+                        <div class="col-md-6 d-none columnaEdades1">
+                            <div class="row">
+                                <div class="col">
+                                    Edades
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col d-flex">
+                                    <div class="mx-1 d-none divEdades" id="div_edad1_1">
+                                        <select class="form-control" id="edad1_1">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad1_2">
+                                        <select class="form-control" id="edad1_2">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad1_3">
+                                        <select class="form-control" id="edad1_3">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad1_4">
+                                        <select class="form-control" id="edad1_4">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad1_5">
+                                        <select class="form-control" id="edad1_5">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad1_6">
+                                        <select class="form-control" id="edad1_6">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row g-mb-10 mt-sm-3 align-items-center habitacion d-none" id="habitacion2" data-id="2">
+                        <div class="col-md-12">
+                            Habitación 2
+                        </div>
+                        <div class="col-md-3">
+                            <label for="adultos2">Adultos <small class="text-muted">(+18 años)</small></label>
+                            <input type="number" id="adultos2" value="1" min="1" max="8" step="1" readonly
+                                class="numeroPasajerosHoteles" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="menores2">Menores <small class="text-muted">(0-17 años)</small></label>
+                            <input type="number" id="menores2" value="0" min="0" max="6" step="1" readonly
+                                class="numeroPasajerosHoteles cantidadMenores" data-hab="2" />
+                        </div>
+                        <div class="col-md-6 d-none columnaEdades2">
+                            <div class="row">
+                                <div class="col">
+                                    Edades
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col d-flex">
+                                    <div class="mx-1 d-none divEdades" id="div_edad2_1">
+                                        <select class="form-control" id="edad2_1">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad2_2">
+                                        <select class="form-control" id="edad2_2">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad2_3">
+                                        <select class="form-control" id="edad2_3">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad2_4">
+                                        <select class="form-control" id="edad2_4">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad2_5">
+                                        <select class="form-control" id="edad2_5">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad2_6">
+                                        <select class="form-control" id="edad2_6">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row g-mb-10 mt-sm-3 align-items-center habitacion d-none" id="habitacion3" data-id="3">
+                        <div class="col-md-12">
+                            Habitación 3
+                        </div>
+                        <div class="col-md-3">
+                            <label for="adultos3">Adultos <small class="text-muted">(+18 años)</small></label>
+                            <input type="number" id="adultos3" value="1" min="1" max="8" step="1" readonly
+                                class="numeroPasajerosHoteles" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="menores3">Menores <small class="text-muted">(0-17 años)</small></label>
+                            <input type="number" id="menores3" value="0" min="0" max="6" step="1" readonly
+                                class="numeroPasajerosHoteles cantidadMenores" data-hab="3" />
+                        </div>
+                        <div class="col-md-6 d-none columnaEdades3">
+                            <div class="row">
+                                <div class="col">
+                                    Edades
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col d-flex">
+                                    <div class="mx-1 d-none divEdades" id="div_edad3_1">
+                                        <select class="form-control" id="edad3_1">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad3_2">
+                                        <select class="form-control" id="edad3_2">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad3_3">
+                                        <select class="form-control" id="edad3_3">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad3_4">
+                                        <select class="form-control" id="edad3_4">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad3_5">
+                                        <select class="form-control" id="edad3_5">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad3_6">
+                                        <select class="form-control" id="edad3_6">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row g-mb-10 mt-sm-3 align-items-center habitacion d-none" id="habitacion4" data-id="4">
+                        <div class="col-md-12">
+                            Habitación 4
+                        </div>
+                        <div class="col-md-3">
+                            <label for="adultos4">Adultos <small class="text-muted">(+18 años)</small></label>
+                            <input type="number" id="adultos4" value="1" min="1" max="8" step="1" readonly
+                                class="numeroPasajerosHoteles" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="menores4">Menores <small class="text-muted">(0-17 años)</small></label>
+                            <input type="number" id="menores4" value="0" min="0" max="6" step="1" readonly
+                                class="numeroPasajerosHoteles cantidadMenores" data-hab="4" />
+                        </div>
+                        <div class="col-md-6 d-none columnaEdades4">
+                            <div class="row">
+                                <div class="col">
+                                    Edades
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col d-flex">
+                                    <div class="mx-1 d-none divEdades" id="div_edad4_1">
+                                        <select class="form-control" id="edad4_1">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad4_2">
+                                        <select class="form-control" id="edad4_2">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad4_3">
+                                        <select class="form-control" id="edad4_3">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad4_4">
+                                        <select class="form-control" id="edad4_4">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad4_5">
+                                        <select class="form-control" id="edad4_5">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdades" id="div_edad4_6">
+                                        <select class="form-control" id="edad4_6">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="card-footer d-none" id="mensajeErrorHoteles">
+
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="paquetes" role="tabpanel" aria-labelledby="paquetes-tab">
+        <div class="card searchEngine border-0" style="margin:0 auto;border-width:2px">
+            <div class="columnas">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="col-md-3 grupoOrigenPaquetes mb-2 mb-sm-0">
+                                    <label for="origenPaquetes">Ciudad de partida</label>
+                                    <input type="text" class="form-control origenPaquetes" id="origenPaquetes"
+                                        placeholder="Origen" />
+                                    <span class="text-secondary fas fa-circle-notch fa-spin preloaderPaquetes"></span>
+                                    <input type="hidden" id="codigoOrigenPaquetes" value="" />
+                                </div>
+                                <div class="col-md-3 grupoDestinoPaquetes mb-2 mb-sm-0">
+                                    <label for="destinoPaquetes">Ciudad de destino</label>
+                                    <input type="text" class="form-control destinoPaquetes" id="destinoPaquetes"
+                                        placeholder="Destino" />
+                                    <span class="text-secondary fas fa-circle-notch fa-spin preloaderPaquetes"></span>
+                                    <input type="hidden" id="codigoDestinoPaquetes" value="" />
+                                </div>
+                                <div class="col-md-4 mb-2 mb-sm-0 form-group">
+                                    <label for="partidaPaquetes">Check in / Check out</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control partidaPaquetes" id="partidaPaquetes"
+                                            readonly placeholder="Partida" aria-label="Partida"
+                                            aria-describedby="calendarioPartidaPaquetes" value="" />
+                                        <div class="input-group-append">
+                                            <span
+                                                class="input-group-text calendarioPartidaPaquetes g-theme-bg-blue-v1 text-white"
+                                                id="calendarioPartidaPaquetes">
+                                                <i class="far fa-calendar-alt"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 form-group mb-2 mb-sm-0">
+                                    <label for="cantidadHabitacionesPaquetes">Habitaciones</label>
+                                    <select class="form-control" id="cantidadHabitacionesPaquetes">
+                                        <option value="1" selected>1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary btn-block h-100" id="buscarPaquetes"><i
+                                    class="fas fa-search" style="font-size:1.4rem"></i><br>Buscar paquetes</button>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row g-mb-10 mt-sm-3 align-items-center habitacionPaquetes d-flex"
+                        id="habitacionPaquetes1" data-id="1">
+                        <div class="col-md-12">
+                            Habitación 1
+                        </div>
+                        <div class="col-md-3">
+                            <label for="adultosPaquetes1">Adultos <small class="text-muted">(+18 años)</small></label>
+                            <input type="number" id="adultosPaquetes1" value="2" min="1" max="8" step="1" readonly
+                                class="numeroPasajerosPaquetes" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="menoresPaquetes1">Menores <small class="text-muted">(0-17 años)</small></label>
+                            <input type="number" id="menoresPaquetes1" value="0" min="0" max="6" step="1" readonly
+                                class="numeroPasajerosPaquetes cantidadMenoresPaquetes" data-hab="1" />
+                        </div>
+                        <div class="col-md-6 d-none columnaEdadesPaquetes1">
+                            <div class="row">
+                                <div class="col">
+                                    Edades
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col d-flex">
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes1_1">
+                                        <select class="form-control" id="edadPaquetes1_1">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes1_2">
+                                        <select class="form-control" id="edadPaquetes1_2">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes1_3">
+                                        <select class="form-control" id="edadPaquetes1_3">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes1_4">
+                                        <select class="form-control" id="edadPaquetes1_4">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes1_5">
+                                        <select class="form-control" id="edadPaquetes1_5">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes1_6">
+                                        <select class="form-control" id="edadPaquetes1_6">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row g-mb-10 mt-sm-3 align-items-center habitacionPaquetes d-none"
+                        id="habitacionPaquetes2" data-id="2">
+                        <div class="col-md-12">
+                            Habitación 2
+                        </div>
+                        <div class="col-md-3">
+                            <label for="adultosPaquetes2">Adultos <small class="text-muted">(+18 años)</small></label>
+                            <input type="number" id="adultosPaquetes2" value="1" min="1" max="8" step="1" readonly
+                                class="numeroPasajerosPaquetes" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="menoresPaquetes2">Menores <small class="text-muted">(0-17 años)</small></label>
+                            <input type="number" id="menoresPaquetes2" value="0" min="0" max="6" step="1" readonly
+                                class="numeroPasajerosPaquetes cantidadMenoresPaquetes" data-hab="2" />
+                        </div>
+                        <div class="col-md-6 d-none columnaEdadesPaquetes2">
+                            <div class="row">
+                                <div class="col">
+                                    Edades
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col d-flex">
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes2_1">
+                                        <select class="form-control" id="edadPaquetes2_1">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes2_2">
+                                        <select class="form-control" id="edadPaquetes2_2">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes2_3">
+                                        <select class="form-control" id="edadPaquetes2_3">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes2_4">
+                                        <select class="form-control" id="edadPaquetes2_4">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes2_5">
+                                        <select class="form-control" id="edadPaquetes2_5">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes2_6">
+                                        <select class="form-control" id="edadPaquetes2_6">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row g-mb-10 mt-sm-3 align-items-center habitacionPaquetes d-none"
+                        id="habitacionPaquetes3" data-id="3">
+                        <div class="col-md-12">
+                            Habitación 3
+                        </div>
+                        <div class="col-md-3">
+                            <label for="adultosPaquetes3">Adultos <small class="text-muted">(+18 años)</small></label>
+                            <input type="number" id="adultosPaquetes3" value="1" min="1" max="8" step="1" readonly
+                                class="numeroPasajerosPaquetes" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="menoresPaquetes3">Menores <small class="text-muted">(0-17 años)</small></label>
+                            <input type="number" id="menoresPaquetes3" value="0" min="0" max="6" step="1" readonly
+                                class="numeroPasajerosPaquetes cantidadMenoresPaquetes" data-hab="3" />
+                        </div>
+                        <div class="col-md-6 d-none columnaEdadesPaquetes3">
+                            <div class="row">
+                                <div class="col">
+                                    Edades
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col d-flex">
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes3_1">
+                                        <select class="form-control" id="edadPaquetes3_1">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes3_2">
+                                        <select class="form-control" id="edadPaquetes3_2">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes3_3">
+                                        <select class="form-control" id="edadPaquetes3_3">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes3_4">
+                                        <select class="form-control" id="edadPaquetes3_4">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes3_5">
+                                        <select class="form-control" id="edadPaquetes3_5">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes3_6">
+                                        <select class="form-control" id="edadPaquetes3_6">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row g-mb-10 mt-sm-3 align-items-center habitacionPaquetes d-none"
+                        id="habitacionPaquetes4" data-id="4">
+                        <div class="col-md-12">
+                            Habitación 4
+                        </div>
+                        <div class="col-md-3">
+                            <label for="adultosPaquetes4">Adultos <small class="text-muted">(+18 años)</small></label>
+                            <input type="number" id="adultosPaquetes4" value="1" min="1" max="8" step="1" readonly
+                                class="numeroPasajerosPaquetes" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="menoresPaquetes4">Menores <small class="text-muted">(0-17 años)</small></label>
+                            <input type="number" id="menoresPaquetes4" value="0" min="0" max="6" step="1" readonly
+                                class="numeroPasajerosPaquetes cantidadMenoresPaquetes" data-hab="4" />
+                        </div>
+                        <div class="col-md-6 d-none columnaEdadesPaquetes4">
+                            <div class="row">
+                                <div class="col">
+                                    Edades
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col d-flex">
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes4_1">
+                                        <select class="form-control" id="edadPaquetes4_1">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes4_2">
+                                        <select class="form-control" id="edadPaquetes4_2">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes4_3">
+                                        <select class="form-control" id="edadPaquetes4_3">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes4_4">
+                                        <select class="form-control" id="edadPaquetes4_4">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes4_5">
+                                        <select class="form-control" id="edadPaquetes4_5">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-1 d-none divEdadesPaquetes" id="div_edadPaquetes4_6">
+                                        <select class="form-control" id="edadPaquetes4_6">
+                                            <option value="0" selected>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer d-none" id="mensajeErrorPaquetes">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Incluir el JS para el motor --> <script src="https://carnival.aereos.app/aereos.app.lite.min.js"></script>
+ </body> 
+</html>
